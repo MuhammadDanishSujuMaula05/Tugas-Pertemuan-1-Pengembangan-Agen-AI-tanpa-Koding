@@ -1,0 +1,118 @@
+{
+  "name": "AI Chatbot with Google Gemini",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Kamu adalah asisten digital marketing. Bantu jawab pertanyaan user tentang SEO dan Iklan",
+          "maxIterations": 10,
+          "enableStreaming": true
+        }
+      },
+      "id": "ba3ea478-963f-4d8e-8093-d7b48d168439",
+      "name": "AI Chatbot Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        592,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "options": {
+          "maxOutputTokens": 2048,
+          "temperature": 0.7
+        }
+      },
+      "id": "7634b4ef-ff00-42b7-9c52-0de0e09d53b0",
+      "name": "Google Gemini Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        608,
+        528
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "JzFauUfzOszU3vrn",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "127b3af5-f3f8-449f-b096-4a4fe3cc3c81",
+      "name": "Agent Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        736,
+        528
+      ]
+    },
+    {
+      "parameters": {
+        "public": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        176,
+        208
+      ],
+      "id": "3889caac-0316-4c4e-b223-d038efcec197",
+      "name": "When chat message received",
+      "webhookId": "25a27f5f-b9d4-437a-ab03-39cee9b6fd43"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Gemini Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Chatbot Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Chatbot Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Chatbot Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "1cc85d25-70e1-4f1e-b0f3-328b18ea6427",
+  "meta": {
+    "instanceId": "bf4c019190257c5e827a641305f3b261163e865d1ef9db31456c78a376bdc677"
+  },
+  "id": "qVMsVZC5kipPHAjP",
+  "tags": []
+}
